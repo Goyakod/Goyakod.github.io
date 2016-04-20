@@ -80,35 +80,38 @@
 
 
 
-<meta name="description" content="title: iOS之StatusBar详解
-随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
+<meta name="description" content="随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
 
 #UIStatusBarStyle状态栏有两种显示风格：1.UIStatusBarStyleDefault     
 
-2.UIStatusBarStyl">
+2.UIStatusBarStyleLightContent
+
+那么它的背景颜色是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Goyakod's Blog">
 <meta property="og:url" content="http://yoursite.com/2016/04/20/iOS之StatusBar详解/index.html">
 <meta property="og:site_name" content="Goyakod's Blog">
-<meta property="og:description" content="title: iOS之StatusBar详解
-随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
+<meta property="og:description" content="随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
 
 #UIStatusBarStyle状态栏有两种显示风格：1.UIStatusBarStyleDefault     
 
-2.UIStatusBarStyl">
+2.UIStatusBarStyleLightContent
+
+那么它的背景颜色是">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-d5808a65be80b602.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-ec645842841d02b8.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-9026d95447f8afaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-92752afe2be142fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-04-20T06:24:30.000Z">
+<meta property="og:updated_time" content="2016-04-20T14:02:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Goyakod's Blog">
-<meta name="twitter:description" content="title: iOS之StatusBar详解
-随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
+<meta name="twitter:description" content="随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。
 
 #UIStatusBarStyle状态栏有两种显示风格：1.UIStatusBarStyleDefault     
 
-2.UIStatusBarStyl">
+2.UIStatusBarStyleLightContent
+
+那么它的背景颜色是">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/217990-d5808a65be80b602.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -199,16 +202,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
 
       
     </ul>
@@ -287,8 +280,7 @@
       
 
       
-        <hr>
-<h2 id="title-iOS之StatusBar详解"><a href="#title-iOS之StatusBar详解" class="headerlink" title=" title: iOS之StatusBar详解"></a> title: iOS之StatusBar详解</h2><blockquote>
+        <blockquote>
 <p>随便打开手机上的主流APP，我们不难发现它们的状态栏都是跟导航栏保持一致的背景颜色，如下图的微信和instagram:<br><img src="http://upload-images.jianshu.io/upload_images/217990-d5808a65be80b602.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WECHAT.PNG"><br><img src="http://upload-images.jianshu.io/upload_images/217990-ec645842841d02b8.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="INS.PNG"><br>那么今天我们就来说一下StatusBar这个只有区区20像素高度的小东西。</p>
 </blockquote>
 <p>#UIStatusBarStyle<br>状态栏有两种显示风格：<br>1.UIStatusBarStyleDefault     </p>
@@ -411,7 +403,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/default_avatar.jpg"
+               src="/uploads/avatar.png"
                alt="Goyakod" />
           <p class="site-author-name" itemprop="name">Goyakod</p>
           <p class="site-description motion-element" itemprop="description">一个iOS程序媛的日常</p>
@@ -451,7 +443,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-iOS之StatusBar详解"><span class="nav-number">1.</span> <span class="nav-text"> title: iOS之StatusBar详解</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
