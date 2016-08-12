@@ -219,6 +219,121 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/12/dispatch_semaphore/" itemprop="url">
+                  未命名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-12T13:35:44+08:00" content="2016-08-12">
+              2016-08-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>我为什么要用信号量?<br>因为一个需求。</p>
+</blockquote>
+<p>##需求介绍<br>这是一个很常见的需求：项目中的业务接口请求的时候需要Token验证。我们最简化这个需求就是：两个请求，请求1成功返回所需参数之后，才能开始请求2。</p>
+<p>一个很容易想到的做法就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">- (void)getToken</span><br><span class="line">&#123;</span><br><span class="line">    //以上请求的设置忽略</span><br><span class="line">    NSURLSessionDataTask *task = [mySession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</span><br><span class="line">        if (data) &#123;</span><br><span class="line">            NSLog(@&quot;get Token&quot;);</span><br><span class="line">            //拿到token，传给request请求做参数</span><br><span class="line">            [self request:token];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            NSLog(@&quot;token error:%@&quot;,error.description);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;];</span><br><span class="line">    [task resume];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)request:(NSString *)params</span><br><span class="line">&#123;</span><br><span class="line">    //请求的设置忽略</span><br><span class="line">    NSURLSessionDataTask *task = [mySession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</span><br><span class="line">        if (data) &#123;</span><br><span class="line">            NSLog(@&quot;request success&quot;);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            NSLog(@&quot;request error:%@----&quot;,error.description);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    [task resume];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种做法是最容易想到的，但是缺点也是很明显的。获取token的方法与业务层的请求紧密混合在一起了，而且很不容易分离，这会导致你的网络管理类的请求方法变得臃肿。</p>
+<p>所以，下面我要用信号量使得token跟业务层的request完成分离开，使代码逻辑更清晰。</p>
+<p>##dispatch_semaphore 介绍<br>dispatch_semaphore只有三个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//创建信号量</span><br><span class="line">dispatch_semaphore_create</span><br><span class="line">//发送信号量</span><br><span class="line">dispatch_semaphore_signal</span><br><span class="line">//等待信号量</span><br><span class="line">dispatch_semaphore_wait</span><br></pre></td></tr></table></figure>
+<p>执行dispatch_semaphore_create 会根据传入的long型参数创建对应数目的信号量；执行 dispatch_semaphore_signal 会增加一个信号量；执行dispatch_semaphore_wait 则会减少一个信号量,如果信号量是0，就会根据传入的等待时间来等待。</p>
+<p>这样一解释，不知道你有没有醍醐灌顶。对于上面的需求，我们在请求token的时候创建信号量为0，成功的话发送信号量，在业务层请求前永久等待信号即可。</p>
+<p>看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//请求的按钮点击</span><br><span class="line">- (IBAction)buttonPress:(UIButton *)sender</span><br><span class="line">&#123;</span><br><span class="line">    //创建信号量</span><br><span class="line">    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</span><br><span class="line">    [self getToken:semaphore];</span><br><span class="line">    //此时的信号量为0，只有token请求成功发送信号量之后，才会往下执行[self request]方法，否则会一直等下去;</span><br><span class="line">    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">    [self request];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)getToken:(dispatch_semaphore_t)semaphore</span><br><span class="line">&#123;</span><br><span class="line">    //以上请求的设置忽略</span><br><span class="line">    NSURLSessionDataTask *task = [mySession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</span><br><span class="line">        if (data) &#123;</span><br><span class="line">            NSLog(@&quot;get Token&quot;);</span><br><span class="line">           //成功拿到token，发送信号量:</span><br><span class="line">            dispatch_semaphore_signal(semaphore);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            NSLog(@&quot;token error:%@&quot;,error.description);</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;];</span><br><span class="line">    [task resume];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>思路理顺了吧~让我们来跑一下程序：<br>哎呀~卡住了！。。。</p>
+<p>是的，因为我们设置了永久等待，所以token请求异步去请求，在当前线程信号量是0，就不会往下执行了，会一直这样卡下去，该怎么解决呢？没错，用异步嘛~</p>
+<p>再来代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- (IBAction)buttonPress:(UIButton *)sender</span><br><span class="line">&#123;</span><br><span class="line">    //创建一个并行队列</span><br><span class="line">    dispatch_queue_t queque = dispatch_queue_create(&quot;GoyakodCreated&quot;, DISPATCH_QUEUE_CONCURRENT);</span><br><span class="line">    //异步执行</span><br><span class="line">    dispatch_async(queque, ^&#123;</span><br><span class="line">        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</span><br><span class="line">        [self getToken:semaphore];</span><br><span class="line">        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">        [self request];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;main thread&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再跑一下程序，看控制台打印信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-c338865f558308fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-08-12 11.12.50.png"></p>
+<p>如果你还不放心可以多试几次，看看是不是token每次都在request之前。</p>
+<p>##总结<br>我们之所以要这样做，其实只有一个目的就是让代码清晰，这样获取Token的方法可以单独提出一个类，判断token是否过期等逻辑就不会跟业务请求混在一起了，毕竟真正项目运用的时候网络请求类要比demo复杂得多。</p>
+<p>##最后<br><a href="https://github.com/Goyakod/dispatch_semaphore.git" target="_blank" rel="external">demo 地址</a></p>
+
+          
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/20/3DTouch/" itemprop="url">
                   未命名
                 </a>
@@ -868,7 +983,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
