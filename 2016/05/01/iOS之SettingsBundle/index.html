@@ -1,0 +1,601 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="下图是在手机设置里点击钉钉APP后的页面：
+
+
+以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
+#Settings.Bundle
+Settings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
+##Title
+
+Type：配置类型，默认是Ti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS之SettingsBundle">
+<meta property="og:url" content="http://yoursite.com/2016/05/01/iOS之SettingsBundle/index.html">
+<meta property="og:site_name" content="Goyakod's Blog">
+<meta property="og:description" content="下图是在手机设置里点击钉钉APP后的页面：
+
+
+以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
+#Settings.Bundle
+Settings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
+##Title
+
+Type：配置类型，默认是Ti">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-07d6512638b08f1b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-3d4129c3e226566b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-cc186e42d4159da9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-eb89fb6c0a7a68c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-065b42912a95de6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-719a1575a138c43b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-d382d82449db3c8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-b348f17a935595a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-ab23bad99d1e287a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-f711a2b030161aa4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-9fb721ceddfe07df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-2aa16c858c606315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-08-16T02:17:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS之SettingsBundle">
+<meta name="twitter:description" content="下图是在手机设置里点击钉钉APP后的页面：
+
+
+以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
+#Settings.Bundle
+Settings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
+##Title
+
+Type：配置类型，默认是Ti">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS之SettingsBundle | Goyakod's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Goyakod's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Got off your ass and knock on door.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS之SettingsBundle
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-01T09:57:35+08:00" content="2016-05-01">
+              2016-05-01
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下图是在手机设置里点击钉钉APP后的页面：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_0663.PNG"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-07d6512638b08f1b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_0664.PNG"></p>
+<p>以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。</p>
+<p>#Settings.Bundle</p>
+<p>Settings.Bundle支持六种配置项分别是：<strong>Title，MultiValue，Group，Slider，ToggleSwitch，TextField</strong> 。</p>
+<p>##Title</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-3d4129c3e226566b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Title.png"></p>
+<p>Type：配置类型，默认是Title<br>Title：配置项显示的Title<br>Identifier: 配置项的标识符，用来获取配置项的配置内容<br>Default Value :配置项默认值</p>
+<p>##MultiValue</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-cc186e42d4159da9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MultiValue.png"></p>
+<p>Type：配置类型，默认Multi Value<br>Title：配置项显示的标题<br>Identifier：配置项标识符，用来获取配置项的配置内容<br>Default：配置项默认值<br>Titles：显示的标题数组<br>Values：显示的值数组，与Titles一一对应</p>
+<p>##Group</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-eb89fb6c0a7a68c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Group.png"></p>
+<p>Type，Title 同上；</p>
+<p>##TextField</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-065b42912a95de6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextField.png"></p>
+<p>Text Field Is Secure：是否密文显示<br>KeyBoard Type：键盘类型<br>Autocapitalization Stylele：自动大写<br>Autocorrection Style：自动纠正拼写</p>
+<p>##ToggleSwitch</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-719a1575a138c43b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ToggleSwitch.png"></p>
+<p>##Slider</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-d382d82449db3c8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Slider.png"></p>
+<p>Minimum Value：最小值<br>Maximun Value：最大值<br>Min Value Image Filename：最小值端图片<br>Max Value Image Filename：最大值端图片</p>
+<p>#如何设置</p>
+<p>1.New File -&gt;Settings.Bundle</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-b348f17a935595a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AddSettingBundle.png"></p>
+<p>在右侧的目录会看到：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-ab23bad99d1e287a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="rootPlist.png"></p>
+<p>在Root.plist里面添加上面说的配置项目：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-f711a2b030161aa4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plist.png"></p>
+<p>配置好后，运行项目，然后在设置中点击app，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-9fb721ceddfe07df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图1.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/217990-2aa16c858c606315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图2.png"></p>
+<p>#程序中获取配置信息<br>获取配置信息其实很简单，直接上代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//获取SettingsBundle信息</span><br><span class="line">    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;title_perference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;sex_perference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;name_preference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;enabled_preference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;slider_preference&quot;]);</span><br></pre></td></tr></table></figure>
+<p><strong>这里有一点需要说明：</strong><br>如果运行应用后直接直接通过上面的代码获取信息，你会得到null；原因是：<br>root.plist实际上只是一个静态文件用来在设置里显示；只有当你对它进行修改，它才会往NSUserDefaults里添加。修改配置后，NSUserDefaults的优先级高于root.plist文件。</p>
+<p>#最后</p>
+<blockquote>
+<p>在企业级应用中，后台访问地址需要用户自行配置的时候，SettingsBundle确实很好用。</p>
+</blockquote>
+<p><a href="https://github.com/Goyakod/SettingsBundle.git" target="_blank" rel="external">Demo_Git地址</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/16/Xcode插件/" rel="next" title="Xcode插件">
+                <i class="fa fa-chevron-left"></i> Xcode插件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/16/dispatch_semaphore/" rel="prev" title="dispatch_semaphore">
+                dispatch_semaphore <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Goyakod" />
+          <p class="site-author-name" itemprop="name">Goyakod</p>
+          <p class="site-description motion-element" itemprop="description">一个iOS程序媛的日常</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Goyakod</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
