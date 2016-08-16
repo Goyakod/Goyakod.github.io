@@ -80,28 +80,16 @@
 
 
 
-<meta name="description" content="枚举类型，对程序员来说再熟悉不过了，但是，你确定你在正确得使用它吗？
-
-在用枚举之前，让我们来区分一下状态和选项这两个概念。
-状态：同时只能有一种。比如：一个POST请求的返回结果：要么成功，要么失败。这种情况下，成功和失败是POST请求的一种状态。选项：同时可以有一种或者一种以上。比如：APP可以同时支持竖屏和横屏，这个时候横屏和竖屏就是屏幕方向的两个选项。
-那么，我们怎么使用枚举来定义状态和">
+<meta name="description" content="一个iOS程序媛的日常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Goyakod's Blog">
-<meta property="og:url" content="http://yoursite.com/2016/04/20/如何正确使用枚举/index.html">
+<meta property="og:title" content="test">
+<meta property="og:url" content="http://yoursite.com/2016/08/16/test/index.html">
 <meta property="og:site_name" content="Goyakod's Blog">
-<meta property="og:description" content="枚举类型，对程序员来说再熟悉不过了，但是，你确定你在正确得使用它吗？
-
-在用枚举之前，让我们来区分一下状态和选项这两个概念。
-状态：同时只能有一种。比如：一个POST请求的返回结果：要么成功，要么失败。这种情况下，成功和失败是POST请求的一种状态。选项：同时可以有一种或者一种以上。比如：APP可以同时支持竖屏和横屏，这个时候横屏和竖屏就是屏幕方向的两个选项。
-那么，我们怎么使用枚举来定义状态和">
-<meta property="og:updated_time" content="2016-04-20T14:02:05.000Z">
+<meta property="og:description" content="一个iOS程序媛的日常">
+<meta property="og:updated_time" content="2016-08-16T01:52:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Goyakod's Blog">
-<meta name="twitter:description" content="枚举类型，对程序员来说再熟悉不过了，但是，你确定你在正确得使用它吗？
-
-在用枚举之前，让我们来区分一下状态和选项这两个概念。
-状态：同时只能有一种。比如：一个POST请求的返回结果：要么成功，要么失败。这种情况下，成功和失败是POST请求的一种状态。选项：同时可以有一种或者一种以上。比如：APP可以同时支持竖屏和横屏，这个时候横屏和竖屏就是屏幕方向的两个选项。
-那么，我们怎么使用枚举来定义状态和">
+<meta name="twitter:title" content="test">
+<meta name="twitter:description" content="一个iOS程序媛的日常">
 
 
 
@@ -119,7 +107,7 @@
   };
 </script>
 
-  <title>  | Goyakod's Blog </title>
+  <title> test | Goyakod's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -229,7 +217,7 @@
             
             
               
-                
+                test
               
             
           </h1>
@@ -241,8 +229,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-20T14:11:08+08:00" content="2016-04-20">
-              2016-04-20
+            <time itemprop="dateCreated" datetime="2016-08-16T09:52:25+08:00" content="2016-08-16">
+              2016-08-16
             </time>
           </span>
 
@@ -269,29 +257,7 @@
       
 
       
-        <blockquote>
-<p>枚举类型，对程序员来说再熟悉不过了，但是，你确定你在正确得使用它吗？</p>
-</blockquote>
-<p>在用枚举之前，让我们来区分一下<strong>状态</strong>和<strong>选项</strong>这两个概念。</p>
-<p><strong>状态</strong>：同时只能有一种。比如：一个POST请求的返回结果：要么成功，要么失败。这种情况下，成功和失败是POST请求的一种状态。<br><strong>选项</strong>：同时可以有一种或者一种以上。比如：APP可以同时支持竖屏和横屏，这个时候横屏和竖屏就是屏幕方向的两个选项。</p>
-<p>那么，我们怎么使用枚举来定义状态和选项呢？</p>
-<p>##状态<br>不好的写法（你可能经常见到的写法）:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define  STATUS_FAIL        0</span><br><span class="line">#define  STATUS_SUCCESS     1</span><br><span class="line"></span><br><span class="line">//用int变量直接接收</span><br><span class="line">int status = STATUS_SUCCESS;</span><br></pre></td></tr></table></figure>
-<p>这样写的不恰当之处在于：<br>1.宏定义没有类型约束，只是单纯的替换；<br>2.无法限制状态的所有情况；比如：人为地把status赋值为3，程序可能就会出错找不到对应的状态，因为编译器不会对status=3提示警告。</p>
-<p>正确的写法是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef enum _ZXSTATUS&#123;</span><br><span class="line">    </span><br><span class="line">    ZXSTATUS_FAIL = 0,</span><br><span class="line">    </span><br><span class="line">    ZXSTATUS_SUCCESS</span><br><span class="line"></span><br><span class="line">&#125;ZXSTATUS;</span><br></pre></td></tr></table></figure>
-<p>##选项</p>
-<p>举个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">typedef enum _ZXDirection&#123;</span><br><span class="line">    </span><br><span class="line">    ZXDirectionNone = 0,</span><br><span class="line">    ZXDirectionTop = 1 &lt;&lt; 0,</span><br><span class="line">    ZXDirectionLeft = 1 &lt;&lt; 1,</span><br><span class="line">    ZXDirectionRight = 1 &lt;&lt; 2,</span><br><span class="line">    ZXDirectionBottom = 1 &lt;&lt; 3,</span><br><span class="line">    </span><br><span class="line">&#125;ZXDirection;</span><br></pre></td></tr></table></figure>
-<p>注意：这里的选项是用<strong>位运算</strong>的方式定义的，这样的好处就是，选项变量可以如下表示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> ZXDirection direction = ZXDirectionBottom | ZXDirectionTop;</span><br></pre></td></tr></table></figure>
-<p>所以，用位运算就可以同时支持多个值。</p>
-<p>##升级</p>
-<p>C++ 11之前，我们是不能指定枚举的类型的，但是这之后，我们可以为枚举指定实际的存储类型。Foundation框架已经为我们提供了更加“统一、便捷”的枚举定义方法，我们重新定义上面的例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef NS_ENUM(NSUInteger,ZXStatus) &#123;</span><br><span class="line">    </span><br><span class="line">    ZXStatusFail = 0,</span><br><span class="line">    ZXStatusSuccess</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef NS_OPTIONS(NSUInteger,ZXDirection) &#123;</span><br><span class="line">    </span><br><span class="line">    ZXDirectionNone = 0,</span><br><span class="line">    ZXDirectionTop = 1 &lt;&lt; 0,</span><br><span class="line">    ZXDirectionLeft = 1 &lt;&lt; 1,</span><br><span class="line">    ZXDirectionRight = 1 &lt;&lt; 2,</span><br><span class="line">    ZXDirectionBottom = 1 &lt;&lt; 3,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>所以，在Objective-C中，最好所有的枚举都用“<strong>NS_ENUM</strong>”和“<strong>NS_OPTIONS</strong>”定义，保证统一。</p>
-<p><a href="http://tutuge.me/2015/03/21/effective-objective-c-5-enum/" target="_blank" rel="external">参考文章</a></p>
-
+        
       
     </div>
     
@@ -314,17 +280,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/20/iOS之SettingsBundle/" rel="next" title="">
+              <a href="/2016/08/12/dispatch_semaphore/" rel="next" title="">
                 <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/20/Xcode插件/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
