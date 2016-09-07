@@ -264,6 +264,99 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-PNChart之源码分析及使用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/07/PNChart之源码分析及使用/" class="article-date">
+      <time datetime="2016-09-07T10:02:35.000Z" itemprop="datePublished">2016-09-07</time>
+</a>
+
+ 
+    <a href="/2016/09/07/PNChart之源码分析及使用/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/09/07/PNChart之源码分析及使用/" ></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/09/07/PNChart之源码分析及使用/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/07/PNChart之源码分析及使用/">PNChart之源码分析及使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p><strong>PNChart</strong>  is a simple and beautiful chart lib with animation.<br>支持LineChart(折线图)，PieChart(饼图)，BarChart(柱状图)，CircleChart(环形图)，RadarChart(雷达图)，ScatterChart(散点图) 六种图表类型。</p>
+</blockquote>
+<p>##源码分析<br>先看一下PNChart的类列表：<br><img src="http://upload-images.jianshu.io/upload_images/217990-0004783ab8c26e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="PNChart.png"></p>
+<p>很容易看出，除了PNBartChart和PNCircleChart，其他每种类型的图表都有自己对应的数据类，之所以BarChart和CircleChart没有数据类也是因为条形图和环形图表现的数据形式比较单一，只需要传入数据或者百分比即可根据横纵坐标绘制出完整的图表。</p>
+<p>先看几个类：</p>
+<ul>
+<li>PNChart：导入所有类的头文件，方便在使用的时候直接导入PNChart即可。</li>
+<li>PNColor：使用宏定义了颜色值方便绘图时直接使用。</li>
+<li>PNChartLabel：继承UILabel定义的一个简单Label。</li>
+<li>PNChartDelegate：所有图表的点击事件回调代理都统一写在这里。</li>
+<li>PNGenericChart：所有图表类的父类，负责图例是否显示以及样式等设置。每个子类都需要重写getLegendWithMaxWidth方法来返回各自的图例视图。</li>
+</ul>
+<p>接下来我们以最常用的折线图为例，详细分析下源码：<br>相关的类有三个分别是：PNLineChart，PNLineChartData，PNLineChartDataItem。其中PNLineChartData和PNLineChartDataItem都是数据类，继承自NSObject，为什么需要两个数据类，因为PNLineChart支持同一张表里绘制多条折线，所以，PNLineChartData可以理解为每条折线的数据类，PNLineChartDataItem可以理解为每个点的数据类。</p>
+<p>###PNLineChartDataItem<br>PNLineChartDataItem类的重要属性只有一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (readonly) CGFloat y; // should be within the y range</span><br></pre></td></tr></table></figure></p>
+<p>通过类方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (PNLineChartDataItem *)dataItemWithY:(CGFloat)y;</span><br></pre></td></tr></table></figure></p>
+<p>即可创建点对象。</p>
+<p>###PNLineChartData<br>每条线的颜色，透明度，节点数量，标题，是否显示节点标签，节点标签字体，节点标签颜色，节点标签格式，节点的样式，节点颜色，节点的宽度，折线的宽度这些属性可以在PNLineChartData对象来设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typedef PNLineChartDataItem *(^LCLineChartDataGetter)(NSUInteger item);</span><br><span class="line"></span><br><span class="line">@property (copy) LCLineChartDataGetter getData;</span><br></pre></td></tr></table></figure>
+<p>在PNLineChartData中定义了一个获取节点数据的Block：LCLineChartDataGetter，它根据索引item，返回对应数据源的PNLineChartDataItem类对象。</p>
+<p>###PNLineChart<br>PNLineChart这个类才是真正绘制图表类。strokeChart和updateChartData：方法是重要的绘制方法，他们会调用calculateChartPath:andPointsPath:andPathKeyPoints:andPathStartEndPoints: 去根据数据源具体的绘制每一条折线。</p>
+<p>PNLineChart中还实现了对视图点击事件的处理，获取了用户接触的节点后，通过PNChartDelegate代理方法回调到控制器里去实现用户需要的操作。</p>
+<p>##如何使用<br>如何使用在PNChart的git主页，作者已经给出用例了，这里就不赘述了。直接附上连接：<a href="https://github.com/kevinzhow/PNChart" target="_blank" rel="external">PNChart</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-dispatch_semaphore" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

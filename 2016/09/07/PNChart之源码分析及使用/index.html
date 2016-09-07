@@ -15,48 +15,27 @@
 
 
 
-<meta name="description" content="下图是在手机设置里点击钉钉APP后的页面：
+<meta name="description" content="PNChart  is a simple and beautiful chart lib with animation.支持LineChart(折线图)，PieChart(饼图)，BarChart(柱状图)，CircleChart(环形图)，RadarChart(雷达图)，ScatterChart(散点图) 六种图表类型。
 
-
-以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
-Settings.BundleSettings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
-Title
-Type：配置类型，默认是TitleTi">
+##源码分析先看一下PNChart的类列表：
+很容易看出，除了PNBa">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS之SettingsBundle">
-<meta property="og:url" content="http://yoursite.com/2016/05/01/iOS之SettingsBundle/index.html">
+<meta property="og:title" content="PNChart之源码分析及使用">
+<meta property="og:url" content="http://yoursite.com/2016/09/07/PNChart之源码分析及使用/index.html">
 <meta property="og:site_name" content="Goyakod's Blog">
-<meta property="og:description" content="下图是在手机设置里点击钉钉APP后的页面：
+<meta property="og:description" content="PNChart  is a simple and beautiful chart lib with animation.支持LineChart(折线图)，PieChart(饼图)，BarChart(柱状图)，CircleChart(环形图)，RadarChart(雷达图)，ScatterChart(散点图) 六种图表类型。
 
-
-以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
-Settings.BundleSettings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
-Title
-Type：配置类型，默认是TitleTi">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-07d6512638b08f1b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-3d4129c3e226566b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-cc186e42d4159da9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-eb89fb6c0a7a68c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-065b42912a95de6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-719a1575a138c43b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-d382d82449db3c8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-b348f17a935595a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-ab23bad99d1e287a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-f711a2b030161aa4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-9fb721ceddfe07df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-2aa16c858c606315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-08-17T02:51:02.000Z">
+##源码分析先看一下PNChart的类列表：
+很容易看出，除了PNBa">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/217990-0004783ab8c26e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-09-07T10:02:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS之SettingsBundle">
-<meta name="twitter:description" content="下图是在手机设置里点击钉钉APP后的页面：
+<meta name="twitter:title" content="PNChart之源码分析及使用">
+<meta name="twitter:description" content="PNChart  is a simple and beautiful chart lib with animation.支持LineChart(折线图)，PieChart(饼图)，BarChart(柱状图)，CircleChart(环形图)，RadarChart(雷达图)，ScatterChart(散点图) 六种图表类型。
 
-
-以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。
-Settings.BundleSettings.Bundle支持六种配置项分别是：Title，MultiValue，Group，Slider，ToggleSwitch，TextField 。
-Title
-Type：配置类型，默认是TitleTi">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+##源码分析先看一下PNChart的类列表：
+很容易看出，除了PNBa">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/217990-0004783ab8c26e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -88,7 +67,7 @@ Type：配置类型，默认是TitleTi">
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>iOS之SettingsBundle | Goyakod&#39;s Blog</title>
+<title>PNChart之源码分析及使用 | Goyakod&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -290,11 +269,11 @@ Type：配置类型，默认是TitleTi">
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-iOS之SettingsBundle" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-PNChart之源码分析及使用" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/01/iOS之SettingsBundle/" class="article-date">
-      <time datetime="2016-05-01T01:57:35.000Z" itemprop="datePublished">2016-05-01</time>
+      <a href="/2016/09/07/PNChart之源码分析及使用/" class="article-date">
+      <time datetime="2016-09-07T10:02:35.000Z" itemprop="datePublished">2016-09-07</time>
 </a>
 
 
@@ -309,7 +288,7 @@ Type：配置类型，默认是TitleTi">
         
   
     <h1 class="article-title" itemprop="name">
-      iOS之SettingsBundle
+      PNChart之源码分析及使用
     </h1>
   
 
@@ -330,38 +309,29 @@ Type：配置类型，默认是TitleTi">
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>下图是在手机设置里点击钉钉APP后的页面：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-756a65008d840b8d.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_0663.PNG"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-07d6512638b08f1b.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_0664.PNG"></p>
-<p>以上，大家肯定再熟悉不过了，那么它是如何实现的呢？没错，就是今天的主角：Settings.Bundle 。</p>
-<h1 id="Settings-Bundle"><a href="#Settings-Bundle" class="headerlink" title="Settings.Bundle"></a>Settings.Bundle</h1><p>Settings.Bundle支持六种配置项分别是：<strong>Title，MultiValue，Group，Slider，ToggleSwitch，TextField</strong> 。</p>
-<h2 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-3d4129c3e226566b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Title.png"></p>
-<p>Type：配置类型，默认是Title<br>Title：配置项显示的Title<br>Identifier: 配置项的标识符，用来获取配置项的配置内容<br>Default Value :配置项默认值</p>
-<h2 id="MultiValue"><a href="#MultiValue" class="headerlink" title="MultiValue"></a>MultiValue</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-cc186e42d4159da9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MultiValue.png"></p>
-<p>Type：配置类型，默认Multi Value<br>Title：配置项显示的标题<br>Identifier：配置项标识符，用来获取配置项的配置内容<br>Default：配置项默认值<br>Titles：显示的标题数组<br>Values：显示的值数组，与Titles一一对应</p>
-<h2 id="Group"><a href="#Group" class="headerlink" title="Group"></a>Group</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-eb89fb6c0a7a68c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Group.png"></p>
-<p>Type，Title 同上；</p>
-<h2 id="TextField"><a href="#TextField" class="headerlink" title="TextField"></a>TextField</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-065b42912a95de6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextField.png"></p>
-<p>Text Field Is Secure：是否密文显示<br>KeyBoard Type：键盘类型<br>Autocapitalization Stylele：自动大写<br>Autocorrection Style：自动纠正拼写</p>
-<h2 id="ToggleSwitch"><a href="#ToggleSwitch" class="headerlink" title="ToggleSwitch"></a>ToggleSwitch</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-719a1575a138c43b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ToggleSwitch.png"></p>
-<h2 id="Slider"><a href="#Slider" class="headerlink" title="Slider"></a>Slider</h2><p><img src="http://upload-images.jianshu.io/upload_images/217990-d382d82449db3c8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Slider.png"></p>
-<p>Minimum Value：最小值<br>Maximun Value：最大值<br>Min Value Image Filename：最小值端图片<br>Max Value Image Filename：最大值端图片</p>
-<h1 id="如何设置"><a href="#如何设置" class="headerlink" title="如何设置"></a>如何设置</h1><p>1.New File -&gt;Settings.Bundle</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-b348f17a935595a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="AddSettingBundle.png"></p>
-<p>在右侧的目录会看到：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-ab23bad99d1e287a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="rootPlist.png"></p>
-<p>在Root.plist里面添加上面说的配置项目：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-f711a2b030161aa4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plist.png"></p>
-<p>配置好后，运行项目，然后在设置中点击app，效果如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-9fb721ceddfe07df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图1.png"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/217990-2aa16c858c606315.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图2.png"></p>
-<h1 id="程序中获取配置信息"><a href="#程序中获取配置信息" class="headerlink" title="程序中获取配置信息"></a>程序中获取配置信息</h1><p>获取配置信息其实很简单，直接上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//获取SettingsBundle信息</span><br><span class="line">    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;title_perference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;sex_perference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;name_preference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;enabled_preference&quot;]);</span><br><span class="line">    NSLog(@&quot;%@&quot;,[userDefaults objectForKey:@&quot;slider_preference&quot;]);</span><br></pre></td></tr></table></figure>
-<p><strong>这里有一点需要说明：</strong><br>如果运行应用后直接直接通过上面的代码获取信息，你会得到null；原因是：<br>root.plist实际上只是一个静态文件用来在设置里显示；只有当你对它进行修改，它才会往NSUserDefaults里添加。修改配置后，NSUserDefaults的优先级高于root.plist文件。</p>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><blockquote>
-<p>在企业级应用中，后台访问地址需要用户自行配置的时候，SettingsBundle确实很好用。</p>
+        <blockquote>
+<p><strong>PNChart</strong>  is a simple and beautiful chart lib with animation.<br>支持LineChart(折线图)，PieChart(饼图)，BarChart(柱状图)，CircleChart(环形图)，RadarChart(雷达图)，ScatterChart(散点图) 六种图表类型。</p>
 </blockquote>
-<p><a href="https://github.com/Goyakod/SettingsBundle.git" target="_blank" rel="external">Demo_Git地址</a></p>
+<p>##源码分析<br>先看一下PNChart的类列表：<br><img src="http://upload-images.jianshu.io/upload_images/217990-0004783ab8c26e10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="PNChart.png"></p>
+<p>很容易看出，除了PNBartChart和PNCircleChart，其他每种类型的图表都有自己对应的数据类，之所以BarChart和CircleChart没有数据类也是因为条形图和环形图表现的数据形式比较单一，只需要传入数据或者百分比即可根据横纵坐标绘制出完整的图表。</p>
+<p>先看几个类：</p>
+<ul>
+<li>PNChart：导入所有类的头文件，方便在使用的时候直接导入PNChart即可。</li>
+<li>PNColor：使用宏定义了颜色值方便绘图时直接使用。</li>
+<li>PNChartLabel：继承UILabel定义的一个简单Label。</li>
+<li>PNChartDelegate：所有图表的点击事件回调代理都统一写在这里。</li>
+<li>PNGenericChart：所有图表类的父类，负责图例是否显示以及样式等设置。每个子类都需要重写getLegendWithMaxWidth方法来返回各自的图例视图。</li>
+</ul>
+<p>接下来我们以最常用的折线图为例，详细分析下源码：<br>相关的类有三个分别是：PNLineChart，PNLineChartData，PNLineChartDataItem。其中PNLineChartData和PNLineChartDataItem都是数据类，继承自NSObject，为什么需要两个数据类，因为PNLineChart支持同一张表里绘制多条折线，所以，PNLineChartData可以理解为每条折线的数据类，PNLineChartDataItem可以理解为每个点的数据类。</p>
+<p>###PNLineChartDataItem<br>PNLineChartDataItem类的重要属性只有一个<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property (readonly) CGFloat y; // should be within the y range</span><br></pre></td></tr></table></figure></p>
+<p>通过类方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (PNLineChartDataItem *)dataItemWithY:(CGFloat)y;</span><br></pre></td></tr></table></figure></p>
+<p>即可创建点对象。</p>
+<p>###PNLineChartData<br>每条线的颜色，透明度，节点数量，标题，是否显示节点标签，节点标签字体，节点标签颜色，节点标签格式，节点的样式，节点颜色，节点的宽度，折线的宽度这些属性可以在PNLineChartData对象来设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typedef PNLineChartDataItem *(^LCLineChartDataGetter)(NSUInteger item);</span><br><span class="line"></span><br><span class="line">@property (copy) LCLineChartDataGetter getData;</span><br></pre></td></tr></table></figure>
+<p>在PNLineChartData中定义了一个获取节点数据的Block：LCLineChartDataGetter，它根据索引item，返回对应数据源的PNLineChartDataItem类对象。</p>
+<p>###PNLineChart<br>PNLineChart这个类才是真正绘制图表类。strokeChart和updateChartData：方法是重要的绘制方法，他们会调用calculateChartPath:andPointsPath:andPathKeyPoints:andPathStartEndPoints: 去根据数据源具体的绘制每一条折线。</p>
+<p>PNLineChart中还实现了对视图点击事件的处理，获取了用户接触的节点后，通过PNChartDelegate代理方法回调到控制器里去实现用户需要的操作。</p>
+<p>##如何使用<br>如何使用在PNChart的git主页，作者已经给出用例了，这里就不赘述了。直接附上连接：<a href="https://github.com/kevinzhow/PNChart" target="_blank" rel="external">PNChart</a></p>
 
       
     </div>
@@ -370,13 +340,13 @@ Type：配置类型，默认是TitleTi">
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/01/iOS之SettingsBundle/">iOS之SettingsBundle</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/07/PNChart之源码分析及使用/">PNChart之源码分析及使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Goyakod</a></p>
-        <p><span>发布时间:</span>2016-05-01, 09:57:35</p>
-        <p><span>最后更新:</span>2016-08-17, 10:51:02</p>
+        <p><span>发布时间:</span>2016-09-07, 18:02:35</p>
+        <p><span>最后更新:</span>2016-09-07, 18:02:25</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/01/iOS之SettingsBundle/" title="iOS之SettingsBundle">http://yoursite.com/2016/05/01/iOS之SettingsBundle/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/05/01/iOS之SettingsBundle/　　作者: Goyakod" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/07/PNChart之源码分析及使用/" title="PNChart之源码分析及使用">http://yoursite.com/2016/09/07/PNChart之源码分析及使用/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/07/PNChart之源码分析及使用/　　作者: Goyakod" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -388,16 +358,10 @@ Type：配置类型，默认是TitleTi">
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/16/dispatch_semaphore/">
-                    dispatch_semaphore
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/04/16/Xcode插件/">
-                    Xcode插件
+                <a href="/2016/08/16/dispatch_semaphore/">
+                    dispatch_semaphore
                 </a>
             </div>
         
@@ -409,7 +373,7 @@ Type：配置类型，默认是TitleTi">
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Settings-Bundle"><span class="toc-number">1.</span> <span class="toc-text">Settings.Bundle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Title"><span class="toc-number">1.1.</span> <span class="toc-text">Title</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MultiValue"><span class="toc-number">1.2.</span> <span class="toc-text">MultiValue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Group"><span class="toc-number">1.3.</span> <span class="toc-text">Group</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TextField"><span class="toc-number">1.4.</span> <span class="toc-text">TextField</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ToggleSwitch"><span class="toc-number">1.5.</span> <span class="toc-text">ToggleSwitch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slider"><span class="toc-number">1.6.</span> <span class="toc-text">Slider</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何设置"><span class="toc-number">2.</span> <span class="toc-text">如何设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#程序中获取配置信息"><span class="toc-number">3.</span> <span class="toc-text">程序中获取配置信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后"><span class="toc-number">4.</span> <span class="toc-text">最后</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -445,7 +409,7 @@ Type：配置类型，默认是TitleTi">
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"iOS之SettingsBundle　| Goyakod's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"PNChart之源码分析及使用　| Goyakod's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -461,7 +425,7 @@ Type：配置类型，默认是TitleTi">
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/01/iOS之SettingsBundle/" data-title="iOS之SettingsBundle" data-url="http://yoursite.com/2016/05/01/iOS之SettingsBundle/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/07/PNChart之源码分析及使用/" data-title="PNChart之源码分析及使用" data-url="http://yoursite.com/2016/09/07/PNChart之源码分析及使用/"></div>
     <script>
         var duoshuoQuery = {short_name:"null"};
         var loadComment = function(){
@@ -484,15 +448,13 @@ Type：配置类型，默认是TitleTi">
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/08/16/dispatch_semaphore/" title="上一篇: dispatch_semaphore">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/04/16/Xcode插件/" title="下一篇: Xcode插件">
+            <a href="/2016/08/16/dispatch_semaphore/" title="下一篇: dispatch_semaphore">
                 <i class="fa fa-angle-right"></i>
             </a>
         
